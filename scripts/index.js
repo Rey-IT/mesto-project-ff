@@ -23,7 +23,7 @@ function deleteCard(event) {
     const buttonBin = event.target;
     buttonBin.closest('.places__item').remove();
 };
-// @todo: Вывести карточки на страницу
+// @todo: Вывести карточки на страниц
 function addCard(cardPlace, placesList) {
     placesList.append(cardPlace);
 };
