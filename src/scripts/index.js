@@ -1,5 +1,5 @@
 import '../pages/index.css';
-import { createCard } from './card.js';
+import { createCard, deleteCard, toggleLike } from './card.js';
 import { initialCards } from './cards.js';
 import {openModal, closeModal} from './modal.js';
 
@@ -38,8 +38,6 @@ function handleProfileFormSubmit(evt) {
     profileTitle.textContent = popupInputName.value;
     profileDescription.textContent = popupInputDescription.value;
 
-    evt.target.reset();
-
     closeModal(popupTypeEdit);
 }
 
@@ -61,7 +59,7 @@ arrPopups.forEach((popup) => {
         closeBtn.addEventListener('click', () => closeModal(popup)); // обработчик на кнопку закрытия
     }
     popup.addEventListener('mousedown', (evt) => {
-        if (evt.target.classList.contains('popup_is-opened') || evt.target === closeBtn) {
+        if (evt.target.classList.contains('popup_is-opened')) {
             closeModal(popup); // Закрытие попапа по клику на оверлей или крестик
         }
     });
@@ -69,7 +67,7 @@ arrPopups.forEach((popup) => {
 
 // Ф-ия добавления карточки на страницу
 function addCard(item) {
-    const cardElement = createCard(item, handleImageClick);
+    const cardElement = createCard(item, deleteCard, toggleLike, handleImageClick);
     placesList.append(cardElement);
 }
 
@@ -82,7 +80,7 @@ function addNewCard(evt) {
         link: inputTypeLink.value
     };
 
-    placesList.prepend(createCard(newCard, handleImageClick));
+    placesList.prepend(createCard(newCard, deleteCard, toggleLike, handleImageClick));
     
     closeModal(popupTypeNewCard);
     evt.target.reset();
