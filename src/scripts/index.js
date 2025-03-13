@@ -2,7 +2,9 @@ import '../pages/index.css';
 import { createCard, deleteCard, toggleLike } from './card.js';
 import { initialCards } from './cards.js';
 import {openModal, closeModal} from './modal.js';
+import { enableValidation, clearValidation } from "./validation.js";
 
+const profileForm = document.forms["edit-profile"];
 const placesList = document.querySelector('.places__list');  // DOM узлы
 const editProfileButton = document.querySelector('.profile__edit-button');
 const addCardButton = document.querySelector('.profile__add-button');
@@ -49,7 +51,10 @@ function openEditProfilePopup() {
     popupInputDescription.value = profileDescription.textContent;
 }
 
-editProfileButton.addEventListener('click', openEditProfilePopup);
+editProfileButton.addEventListener('click', () => {
+    openEditProfilePopup();
+    clearValidation(profileForm, validationConfig);
+});
 addCardButton.addEventListener('click', () => openModal(popupTypeNewCard));
 
 // Закрытие popup при клике на оверлей или крестик
@@ -102,5 +107,14 @@ function handleImageClick(image, title) {
     openModal(popupTypeImage);
 }
 
-
+const validationConfig = {
+    formSelector: ".popup__form",
+    inputSelector: ".popup__input",
+    submitButtonSelector: ".popup__button",
+    inactiveButtonClass: "popup__button_disabled",
+    inputErrorClass: "popup__input_type_error",
+    errorClass: "popup__error_visible",
+};
+  
+enableValidation(validationConfig);
 
