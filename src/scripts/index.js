@@ -58,8 +58,8 @@ const setProfileData = (userData) => {
 
 const handleProfileFormSubmit = (event) => {
     event.preventDefault();
-    const profilePopupButton = profileForm.querySelector(".popup__button");
-    showLoading(true, profilePopupButton);
+    
+    showLoading(true, event.submitter);
     editProfile({
       name: profileName.value,
       about: profileJob.value,
@@ -72,7 +72,7 @@ const handleProfileFormSubmit = (event) => {
         console.log(error);
       })
       .finally(() => {
-        showLoading(false, profilePopupButton);
+        showLoading(false, event.submitter);
       });
   };
 
@@ -121,9 +121,6 @@ profileImageButton.addEventListener("click", (event) => {
 profileImagePopup.addEventListener("click", handleClick);
 profileImageForm.addEventListener("submit", handleProfileImageFormSubmit);
   
-addCardButton.addEventListener("click", (event) => {
-    openModal(cardPopup);
-  });
 cardPopup.addEventListener("click", handleClick);
   
 const handleNewCardFormSubmit = (event) => {
