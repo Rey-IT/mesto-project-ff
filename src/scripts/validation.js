@@ -4,7 +4,7 @@ function showInputError(formElement, inputElement, errorMessage, validationConfi
     inputElement.classList.add(validationConfig.inputErrorClass);
     errorElement.classList.add(validationConfig.errorClass);
     errorElement.textContent = errorMessage;
-};
+  };
   
 function hideInputError(formElement, inputElement, validationConfig) {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
@@ -12,7 +12,7 @@ function hideInputError(formElement, inputElement, validationConfig) {
     inputElement.classList.remove(validationConfig.inputErrorClass);
     errorElement.classList.remove(validationConfig.errorClass);
     errorElement.textContent = "";
-};
+  };
   
 function isValid(formElement, inputElement, validationConfig) {
   
@@ -32,24 +32,8 @@ function isValid(formElement, inputElement, validationConfig) {
     } else {
       hideInputError(formElement, inputElement, validationConfig);
     }
-};
+  };
   
-function hasInvalidInput(inputList) {
-    return inputList.some((item) => {
-      return !item.validity.valid;
-    });
-};
-
-function togleButtonState(inputList, buttonElement, validationConfig) {
-    if (hasInvalidInput(inputList)) {
-      buttonElement.disabled = true;
-      buttonElement.classList.add(validationConfig.inactiveButtonClass);
-    } else {
-      buttonElement.disabled = false;
-      buttonElement.classList.remove(validationConfig.inactiveButtonClass);
-    }
-};
-
 function setEventListeners(formElement, validationConfig) {
     const inputList = Array.from(
       formElement.querySelectorAll(validationConfig.inputSelector)
@@ -58,15 +42,15 @@ function setEventListeners(formElement, validationConfig) {
       validationConfig.submitButtonSelector
     );
   
-    togleButtonState(inputList, buttonElement, validationConfig);
+    toogleButtonState(inputList, buttonElement, validationConfig);
   
     inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         isValid(formElement, inputElement, validationConfig);
-        togleButtonState(inputList, buttonElement, validationConfig);
+        toogleButtonState(inputList, buttonElement, validationConfig);
       });
     });
-};
+  };
   
 function enableValidation(validationConfig) {
     const formList = Array.from(
@@ -75,8 +59,23 @@ function enableValidation(validationConfig) {
     formList.forEach((formElement) => {
       setEventListeners(formElement, validationConfig);
     });
-};
-
+  };
+  
+function hasInvalidInput(inputList) {
+    return inputList.some((item) => {
+      return !item.validity.valid;
+    });
+  };
+  
+function toogleButtonState(inputList, buttonElement, validationConfig) {
+    if (hasInvalidInput(inputList)) {
+      buttonElement.disabled = true;
+      buttonElement.classList.add(validationConfig.inactiveButtonClass);
+    } else {
+      buttonElement.disabled = false;
+      buttonElement.classList.remove(validationConfig.inactiveButtonClass);
+    }
+  };
   
 function clearValidation(profileForm, validationConfig) {
     const buttonElement = profileForm.querySelector(
@@ -90,7 +89,7 @@ function clearValidation(profileForm, validationConfig) {
       hideInputError(profileForm, inputElement, validationConfig);
     });
   
-    togleButtonState(inputList, buttonElement, validationConfig);
-};
+    toogleButtonState(inputList, buttonElement, validationConfig);
+  };
   
-export { enableValidation, clearValidation };
+export { enableValidation, clearValidation, toogleButtonState };
